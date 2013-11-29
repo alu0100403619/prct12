@@ -222,6 +222,7 @@ class Matriz_Densa < Matriz
 		  end
 	      }          
 	    }
+		 return nil
 	end
 	  
 end
