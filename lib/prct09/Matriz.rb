@@ -1,5 +1,80 @@
-
-
+class MatrizDSL
+  attr_accessor :operacion, :operando, :opciones
+  
+  def initialize(operacion, &block)
+    self.operacion = operacion
+    self.operando = []
+    self.opciones = []
+    
+    if block_given?  
+      if block.arity == 1
+        yield self
+      else
+        instance_eval &block 
+      end
+    end
+    
+    run
+  end
+  
+  def option(opcion)
+    opciones << opcion
+  end
+  
+  def operand(mat)
+    operando << mat
+  end
+  
+  def to_s
+    operando.each do |op|
+      cadena << "#{op} "
+      cadena << "#{operacion}, "
+    end
+    cadena
+  end
+  
+  private
+  def run
+    
+    matrizMadre = Matriz.new()
+    operando.each do |op|
+      vector_Matrices << MatrizMadre.convert(op)
+    end
+    
+    case self.operacion
+    when "suma"
+      vector_Matrices.each do |matriz|
+	result_Matrices += matriz
+      end
+    when "resta"
+      vector_Matrices.each do |matriz|
+	result_Matrices -= matriz
+      end
+    when "producto"
+      vector_Matrices.each do |matriz|
+	result_Matrices *= matriz
+      end
+    else
+      raise TypeError, "No existe la operacion: SUMA, RESTA y PRODUCTO"
+    end
+    
+    #if (opciones.include?("console"))  
+    #elsif (opciones.include?("console"))
+    #result_Matrices
+    
+    case opciones.include?
+    when "console"
+      result_Matrices
+    when "file"
+      # Crea un nuevo fichero, y escribe
+      File.open('Resultado.txt', 'w') do |fich|
+	fich.puts "#{result_Matrices}"
+      end
+    end #case
+  end #def
+  
+end
+########################################################################
 class Matriz
 	
 	include Enumerable
@@ -100,6 +175,16 @@ class Matriz_Densa < Matriz
 		}
 		
 		sum
+	end
+	#-------------------------------------------------------------------
+	def -(other)
+		res = Matriz_Densa.new(@_fil, @_col)
+	
+		0.upto(@_fil-1) { |i| 
+			0.upto(@_col-1) { |j| res._Matriz[i][j] = (@_Matriz[i][j] - other._Matriz[i][j]) } 
+		}
+		
+		res
 	end
 	#-------------------------------------------------------------------
 	def sum(other)
@@ -290,10 +375,6 @@ class Matriz_Dispersa < Matriz
 	end
 	#-------------------------------------------------------------------
 	def +(other)
-
-	end
-	#-------------------------------------------------------------------
-		def +(other)
 		sum = Matriz_Dispersa.new(@_fil, @_col)
 	
 		0.upto(@_fil-1) { |i| 
@@ -313,6 +394,28 @@ class Matriz_Dispersa < Matriz
 		}
 		
 		sum
+	end
+	#-------------------------------------------------------------------
+		def -(other)
+		res = Matriz_Dispersa.new(@_fil, @_col)
+	
+		0.upto(@_fil-1) { |i| 
+			0.upto(@_col-1) { |j| 
+				valueA = 0
+				if (@_Matriz.include?("#{i},#{j}"))
+					valueA = @_Matriz["#{i},#{j}"]
+				end
+				
+				valueB = 0
+				if (other._Matriz.include?("#{i},#{j}"))
+					valueB = other._Matriz["#{i},#{j}"]
+				end
+				
+				res._Matriz["#{i},#{j}"] = (valueA - valueB)
+			 } 
+		}
+		
+		res
 	end
 	#-------------------------------------------------------------------
 	def sum(other)
