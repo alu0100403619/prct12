@@ -40,6 +40,14 @@ require_relative 'Matriz.rb'
 	puts "Minimo de Mat_D: #{Mat_B.min}"
 	
 	puts ""
+	
+	puts "Matriz Nula"
+	mat_Nula = Matriz_Densa.new(2, 2)
+	mat_Nula.nulo
+	puts "#{mat_Nula}"
+	
+	puts ""
+	
 	#---------------------------------------------
 	
 	puts "MATRICES DISPERSAS"
@@ -77,6 +85,13 @@ require_relative 'Matriz.rb'
 	puts "Minimos"
 	puts "Minimo de Mat_C: #{Mat_C.min}"
 	puts "Minimo de Mat_D: #{Mat_D.min}"
+	
+	puts ""
+	
+	puts "Matriz Nula"
+	mat_Null = Matriz_Dispersa.new(2, 2)
+	mat_Null.nulo
+	puts "#{mat_Nula}"
 	
 	puts ""
 	#---------------------------------------------

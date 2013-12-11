@@ -13,8 +13,8 @@ class MatrizDSL
 				instance_eval &block 
 			end
 		end
-		run
-		#puts "#{self}"
+ 		#run
+		puts "#{self}"
 	end
   
 	def option(opcion)
@@ -31,11 +31,25 @@ class MatrizDSL
 			cadena << "#{op} "
 			cadena << "#{operacion}, "
 		end
+		cadena << "\n"
+		cadena << "Opciones: "
+		opciones.each do |opt|
+			cadena << "#{opt}, "
+		end
 		cadena
 	end
   
 	private
 	def run
+		
+		if (opciones.include?"densa")
+			result_Matrices = Matriz_Densa.new(operando[0].size, operando[0][0].size)
+			result_Matrices.nulo
+		elsif (opciones.include?"dispersa")
+			result_Matrices = Matriz_Dispersa.new(operando[0].size, operando[0][0].size)
+			result_Matrices.nulo
+		end
+		
 		vector_Matrices = []
 		matrizMadre = Matriz.new()
 		operando.each do |op|
@@ -44,15 +58,15 @@ class MatrizDSL
 		case self.operacion
 		when "suma"
 			vector_Matrices.each do |matriz|
-				result_Matrices += matriz
+				result_Matrices = result_Matrices + matriz
 			end
 		when "resta"
 			vector_Matrices.each do |matriz|
-				result_Matrices -= matriz
+				result_Matrices = result_Matrices - matriz
 			end
 		when "producto"
 			vector_Matrices.each do |matriz|
-				result_Matrices *= matriz
+				result_Matrices =  result_Matrices * matriz
 			end
 		else
 			raise TypeError, "No existe la operacion: SUMA, RESTA y PRODUCTO"
@@ -163,6 +177,15 @@ class Matriz_Densa < Matriz
 				@_Matriz[i][j] = other[i][j]
 			end #for j
 		end #for i
+	end
+	#-------------------------------------------------------------------
+	def nulo
+		#Carga la matriz a ceros
+		0.upto(@_fil-1) { |i| 
+			0.upto(@_col-1) { |j|
+				@_Matriz[i][j] = 0
+			}
+		}
 	end
 	#-------------------------------------------------------------------
 	def +(other)
@@ -370,6 +393,15 @@ class Matriz_Dispersa < Matriz
 				end
 			end #for j
 		end #for i
+	end
+	#-------------------------------------------------------------------
+	def nulo
+		#Carga la matriz a ceros
+		0.upto(@_fil-1) { |i| 
+			0.upto(@_col-1) { |j|
+				@_Matriz["#{i},#{j}"] = 0
+			}
+		}
 	end
 	#-------------------------------------------------------------------
 	def +(other)
