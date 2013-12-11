@@ -74,6 +74,8 @@ class MatrizDSL
 		
 		if (opciones.include?("console"))
 			result_Matrices
+			puts "IMPRIMIENDO RESULTADO"
+			puts "#{result_Matrices}"
 		elsif (opciones.include?("console"))
 			# Crea un nuevo fichero, y escribe
 			File.open('Resultado.txt', 'w') do |fich|
