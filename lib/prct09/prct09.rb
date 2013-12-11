@@ -26,6 +26,7 @@ require_relative 'Matriz.rb'
 	
 	puts "Prod A*B:"
 	puts "#{(Mat_A * Mat_B)}"
+	
 	puts ""
 	
 	puts "Maximos"
@@ -37,6 +38,8 @@ require_relative 'Matriz.rb'
 	puts "Minimos"
 	puts "Minimo de Mat_C: #{Mat_A.min}"
 	puts "Minimo de Mat_D: #{Mat_B.min}"
+	
+	puts ""
 	#---------------------------------------------
 	
 	puts "MATRICES DISPERSAS"
@@ -54,10 +57,12 @@ require_relative 'Matriz.rb'
 	puts "Clase de Mat_D: #{Mat_D.class}"
 	
 	puts ""
+	
 	puts "Sum C+D:"
 	puts "#{(Mat_C + Mat_D)}"
 	
 	puts ""
+	
 	puts "Prod C*D:"
 	puts "#{(Mat_C * Mat_D)}"
 	
@@ -67,9 +72,23 @@ require_relative 'Matriz.rb'
 	puts "Maximo de Mat_C: #{Mat_C.max}"
 	puts "Maximo de Mat_D: #{Mat_D.max}"
 	
-	#puts "Cual es Mayor?: #{Mat_C > Mat_D}"
+	puts ""
 	
 	puts "Minimos"
 	puts "Minimo de Mat_C: #{Mat_C.min}"
 	puts "Minimo de Mat_D: #{Mat_D.min}"
-
+	
+	puts ""
+	#---------------------------------------------
+	
+	puts "DOMAIN SPECIFIC LANGUAGE: DSL para Matrices"
+	
+	ejemplo = MatrizDSL.new("suma") do 
+		option "densa" 
+		option "console"
+		operand [[1,2,3],[4,5,6],[7,8,9]]
+		operand [[1,1,1],[1,1,1],[1,1,1]]
+	end
+	
+	puts "#{ejemplo}"
+	

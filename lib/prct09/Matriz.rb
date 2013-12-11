@@ -1,78 +1,76 @@
 class MatrizDSL
-  attr_accessor :operacion, :operando, :opciones
+	attr_accessor :operacion, :operando, :opciones
   
-  def initialize(operacion, &block)
-    self.operacion = operacion
-    self.operando = []
-    self.opciones = []
+	def initialize(operacion, &block)
+		self.operacion = operacion
+		self.operando = []
+		self.opciones = []
     
-    if block_given?  
-      if block.arity == 1
-        yield self
-      else
-        instance_eval &block 
-      end
-    end
-    
-    run
-  end
+		if block_given?  
+			if block.arity == 1
+				yield self
+			else
+				instance_eval &block 
+			end
+		end
+		run
+		#puts "#{self}"
+	end
   
-  def option(opcion)
-    opciones << opcion
-  end
+	def option(opcion)
+		opciones << opcion
+	end
   
-  def operand(mat)
-    operando << mat
-  end
+	def operand(mat)
+		operando << mat
+	end
   
-  def to_s
-    operando.each do |op|
-      cadena << "#{op} "
-      cadena << "#{operacion}, "
-    end
-    cadena
-  end
+	def to_s
+		cadena = ""
+		operando.each do |op|
+			cadena << "#{op} "
+			cadena << "#{operacion}, "
+		end
+		cadena
+	end
   
-  private
-  def run
-    
-    matrizMadre = Matriz.new()
-    operando.each do |op|
-      vector_Matrices << MatrizMadre.convert(op)
-    end
-    
-    case self.operacion
-    when "suma"
-      vector_Matrices.each do |matriz|
-	result_Matrices += matriz
-      end
-    when "resta"
-      vector_Matrices.each do |matriz|
-	result_Matrices -= matriz
-      end
-    when "producto"
-      vector_Matrices.each do |matriz|
-	result_Matrices *= matriz
-      end
-    else
-      raise TypeError, "No existe la operacion: SUMA, RESTA y PRODUCTO"
-    end
-    
-    #if (opciones.include?("console"))  
-    #elsif (opciones.include?("console"))
-    #result_Matrices
-    
-    case opciones.include?
-    when "console"
-      result_Matrices
-    when "file"
-      # Crea un nuevo fichero, y escribe
-      File.open('Resultado.txt', 'w') do |fich|
-	fich.puts "#{result_Matrices}"
-      end
-    end #case
-  end #def
-  
+	private
+	def run
+		vector_Matrices = []
+		matrizMadre = Matriz.new()
+		operando.each do |op|
+			vector_Matrices << MatrizMadre.convert(op)
+		end
+		case self.operacion
+		when "suma"
+			vector_Matrices.each do |matriz|
+				result_Matrices += matriz
+			end
+		when "resta"
+			vector_Matrices.each do |matriz|
+				result_Matrices -= matriz
+			end
+		when "producto"
+			vector_Matrices.each do |matriz|
+				result_Matrices *= matriz
+			end
+		else
+			raise TypeError, "No existe la operacion: SUMA, RESTA y PRODUCTO"
+		end
+		#if (opciones.include?("console"))  
+		#elsif (opciones.include?("console"))
+		#result_Matrices
+		case opciones.include?
+		when "console"
+			result_Matrices
+		when "file"
+			# Crea un nuevo fichero, y escribe
+			File.open('Resultado.txt', 'w') do |fich|
+				fich.puts "#{result_Matrices}"
+			end
+		end #case
+	end #def
+
 end
 ########################################################################
 class Matriz

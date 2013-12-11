@@ -10,8 +10,8 @@ ejemplo = MatrixDSL.new("suma") do
   option "densa" 
   option "console"
 
-  operand [[1,2,3],[4,5,6],[7,8,9]]  
-  operand [[1,1,1],[1,1,1],[1,1,1]]  
+  operand [[1,2,3],[4,5,6],[7,8,9]]
+  operand [[1,1,1],[1,1,1],[1,1,1]]
 end
 Utilizar Gemnasium para comprobar las dependencias de la aplicación desarrollada.
 Indicar la URL del repositorio que ha desarrollado y el informe de dependencias para su Gema ofrecido por Gemnasium.
