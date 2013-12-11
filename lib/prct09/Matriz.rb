@@ -13,8 +13,8 @@ class MatrizDSL
 				instance_eval &block 
 			end
 		end
- 		#run
-		puts "#{self}"
+ 		run
+		#puts "#{self}"
 	end
   
 	def option(opcion)
@@ -71,18 +71,27 @@ class MatrizDSL
 		else
 			raise TypeError, "No existe la operacion: SUMA, RESTA y PRODUCTO"
 		end
-		#if (opciones.include?("console"))  
-		#elsif (opciones.include?("console"))
-		#result_Matrices
-		case opciones.include?
-		when "console"
+		
+		if (opciones.include?("console"))
 			result_Matrices
-		when "file"
+		elsif (opciones.include?("console"))
 			# Crea un nuevo fichero, y escribe
 			File.open('Resultado.txt', 'w') do |fich|
 				fich.puts "#{result_Matrices}"
-			end
-		end #case
+			end #File
+			nil
+		end #if
+		
+		#case opciones.include?        NO FUNCIONA
+		#when "console"
+			#result_Matrices
+		#when "file"
+			# Crea un nuevo fichero, y escribe
+			#File.open('Resultado.txt', 'w') do |fich|
+				#fich.puts "#{result_Matrices}"
+			#end
+		#end
+		
 	end #def
 
 end
