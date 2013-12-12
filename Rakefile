@@ -9,6 +9,7 @@ desc "Ejecutar todas las espectativas"
 task :spec do
 	sh "rspec -I. spec/Matriz_Densa_spec.rb"
 	sh "rspec -I. spec/Matriz_Dispersa_spec.rb"
+	sh "rspec -I. spec/Matriz_DSL_spec.rb"
 end
 
 desc "Ejecutar Rdoc"
@@ -26,13 +27,19 @@ task :spec_disperso do
 	sh "rspec -I. spec/Matriz_Dispersa_spec.rb"
 end
 
+desc "Ejecutar las espectativas de la clase MatrizDSL"
+task :spec_dsl do
+	sh "rspec -I. spec/Matriz_DSL_spec.rb"
+end
+
 desc "Ejecutar con documentacion: --format documentation"
 task :doc do
 	sh "rspec -I. spec/Matriz_Densa_spec.rb --format documentation"
 	sh "rspec -I. spec/Matriz_Dispersa_spec.rb  --format documentation"
+	sh "rspec -I. spec/Matriz_DSL_spec.rb --format documentation"
 end
 
-desc "Run /lib/frac_main.rb"
+desc "Run /lib/main.rb"
 task :bin do
 	sh "rspec -I. lib/prct09/prct09.rb"
 end
@@ -63,6 +70,7 @@ desc "Run test with --format: html"
 task :thtml do
 	sh "rspec -I. spec/Matriz_Densa_spec.rb --format html > Matriz_Densa_spec.html"
 	sh "rspec -I. spec/Matriz_Dispersa_spec.rb  --format html > Matriz_Dispersa_spec.html"
+	sh "rspec -I. spec/Matriz_DSL_spec.rb --format html > Matriz_DSL_spec.html"
 end
 
 desc "install gems"
