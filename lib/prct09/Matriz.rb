@@ -15,101 +15,96 @@ class MatrizDSL
 			end
 		end
  		run
-		#puts "#{self}"
 	end
-  
+  #-------------------------------------------------------------------
 	def option(opcion)
 		opciones << opcion
 	end
-  
+  #-------------------------------------------------------------------
 	def operand(mat)
 		operando << mat
 	end
-  
+  #-------------------------------------------------------------------
 	def mostrar_datos
+		cadena = ""
 		tam = operando.size
-		print "Operacion: "
+		cadena << "Operacion: "
 		for i in (0...tam)
-			print "#{operando[i]}"
+			cadena << "#{operando[i]}"
 			if (i != (tam - 1))
 				case self.operacion
 				when "suma"
-					print " + "
+					cadena << " + "
 				when "resta"
-					print " - "
+					cadena << " - "
 				when "producto"
-					print " * "
+					cadena << " * "
 				end #case
 			end #if
 		end #for i
-		puts ""
+		cadena << "\n"
 		tam = opciones.size
-		print "Opciones: "
+		cadena << "Opciones: "
 		for j in (0...tam)
-			print "#{opciones[j]}"
+			cadena << "#{opciones[j]}"
 			if (j != (tam - 1))
-				print ", "
+				cadena << ", "
 			end #if
 		end #for j
+		cadena
 	end
   
 	def to_s
 		cadena = "#{@result_Matrices}"
 	end
-	
+	#-------------------------------------------------------------------
 	private
 	def run
-		
+		#El resultado depende de la opcion
 		if (opciones.include?"densa")
 			@result_Matrices = Matriz_Densa.new(operando[0].size, operando[0][0].size)
-			@result_Matrices.nulo
 		elsif (opciones.include?"dispersa")
 			@result_Matrices = Matriz_Dispersa.new(operando[0].size, operando[0][0].size)
+		else
+			raise TypeError, "No existe la opcion: DENSA, DISPERSA"
+		end
+		
+		if (self.operacion == "producto")
+			@result_Matrices.identidad
+		else
 			@result_Matrices.nulo
 		end
 		
 		vector_Matrices = []
 		matrizMadre = Matriz.new()
 		operando.each do |op|
-			vector_Matrices << MatrizMadre.convert(op)
+			vector_Matrices << matrizMadre.convert(op)
 		end
 		case self.operacion
 		when "suma"
 			vector_Matrices.each do |matriz|
 				@result_Matrices = @result_Matrices + matriz
 			end
-		when "resta"
-			vector_Matrices.each do |matriz|
-				@result_Matrices = @result_Matrices - matriz
-			end
 		when "producto"
 			vector_Matrices.each do |matriz|
 				@result_Matrices =  @result_Matrices * matriz
 			end
 		else
-			raise TypeError, "No existe la operacion: SUMA, RESTA y PRODUCTO"
+			raise TypeError, "No existe la operacion: SUMA y PRODUCTO"
 		end
 		
 		if (opciones.include?("console"))
 			@result_Matrices
-		elsif (opciones.include?("console"))
+		elsif (opciones.include?("file"))
 			# Crea un nuevo fichero, y escribe
 			File.open('Resultado.txt', 'w') do |fich|
 				fich.puts "#{@result_Matrices}"
 			end #File
 			nil
+		else
+			raise TypeError, "No existe la opcion: CONSOLE, FILE"
 		end #if
-		
-		#case opciones.include?        NO FUNCIONA
-		#when "console"
-			#result_Matrices
-		#when "file"
-			# Crea un nuevo fichero, y escribe
-			#File.open('Resultado.txt', 'w') do |fich|
-				#fich.puts "#{result_Matrices}"
-			#end
-		#end
-		
+
 	end #def
 
 end
@@ -211,6 +206,19 @@ class Matriz_Densa < Matriz
 		0.upto(@_fil-1) { |i| 
 			0.upto(@_col-1) { |j|
 				@_Matriz[i][j] = 0
+			}
+		}
+	end
+	#-------------------------------------------------------------------
+	def identidad
+		#Carga la matriz a ceros
+		0.upto(@_fil-1) { |i| 
+			0.upto(@_col-1) { |j|
+				if (i == j)
+					@_Matriz[i][j] = 1
+				else
+					@_Matriz[i][j] = 0
+				end
 			}
 		}
 	end
@@ -427,6 +435,19 @@ class Matriz_Dispersa < Matriz
 		0.upto(@_fil-1) { |i| 
 			0.upto(@_col-1) { |j|
 				@_Matriz["#{i},#{j}"] = 0
+			}
+		}
+	end
+	#-------------------------------------------------------------------
+	def identidad
+		#Carga la matriz a ceros
+		0.upto(@_fil-1) { |i| 
+			0.upto(@_col-1) { |j|
+				if (i == j)
+					@_Matriz["#{i},#{j}"] = 1
+				else
+					@_Matriz["#{i},#{j}"] = 0
+				end
 			}
 		}
 	end

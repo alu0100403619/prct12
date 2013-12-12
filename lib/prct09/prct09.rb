@@ -103,13 +103,30 @@ require_relative 'Matriz.rb'
 		option "console"
 		operand [[1,2,3],[4,5,6],[7,8,9]]
 		operand [[1,1,1],[1,1,1],[1,1,1]]
+		operand [[1,1,1],[1,1,1],[1,1,1]]
 	end
 	puts "Clase de ejemplo: #{ejemplo.class}"
 	puts "Datos de Ejemplo:"
-	ejemplo.mostrar_datos
+	puts "#{ejemplo.mostrar_datos}"
 	
 	puts ""
 	
 	puts "Resultado:"
 	puts "#{ejemplo}"
 	
+	puts ""
+	
+	ejemplo2 = MatrizDSL.new("producto") do 
+		option "densa" 
+		option "console"
+		operand [[1,2,3],[4,5,6],[7,8,9]]
+		operand [[1,1,1],[1,1,1],[1,1,1]]
+	end
+	puts "Clase de ejemplo2: #{ejemplo2.class}"
+	puts "Datos de Ejemplo2:"
+	puts "#{ejemplo2.mostrar_datos}"
+	
+	puts ""
+	
+	puts "Resultado:"
+	puts "#{ejemplo2}"

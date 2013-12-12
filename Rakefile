@@ -41,6 +41,7 @@ desc "Run all Unit Testing"
 task :unit_testing do
 	sh "ruby test/tc_Matriz_Densa.rb"
 	sh "ruby test/tc_Matriz_Dispersa.rb"
+	sh "ruby test/tc_Matriz_DSL.rb"
 end
 
 desc "Run Unit testing Matriz_Densa"
@@ -51,6 +52,11 @@ end
 desc "Run Unit testing Matriz_Dispersa"
 task :test_disperso do
 	sh "ruby test/tc_Matriz_Dispersa.rb"
+end
+
+desc "Run Unit testing Matriz_DSL"
+task :test_dsl do
+	sh "ruby test/tc_Matriz_DSL.rb"
 end
 
 desc "Run test with --format: html"
