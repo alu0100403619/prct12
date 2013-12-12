@@ -5,6 +5,7 @@ class MatrizDSL
 		self.operacion = operacion
 		self.operando = []
 		self.opciones = []
+		@result_Matrices
     
 		if block_given?  
 			if block.arity == 1
@@ -25,29 +26,46 @@ class MatrizDSL
 		operando << mat
 	end
   
-	def to_s
-		cadena = ""
-		operando.each do |op|
-			cadena << "#{op} "
-			cadena << "#{operacion}, "
-		end
-		cadena << "\n"
-		cadena << "Opciones: "
-		opciones.each do |opt|
-			cadena << "#{opt}, "
-		end
-		cadena
+	def mostrar_datos
+		tam = operando.size
+		print "Operacion: "
+		for i in (0...tam)
+			print "#{operando[i]}"
+			if (i != (tam - 1))
+				case self.operacion
+				when "suma"
+					print " + "
+				when "resta"
+					print " - "
+				when "producto"
+					print " * "
+				end #case
+			end #if
+		end #for i
+		puts ""
+		tam = opciones.size
+		print "Opciones: "
+		for j in (0...tam)
+			print "#{opciones[j]}"
+			if (j != (tam - 1))
+				print ", "
+			end #if
+		end #for j
 	end
   
+	def to_s
+		cadena = "#{@result_Matrices}"
+	end
+	
 	private
 	def run
 		
 		if (opciones.include?"densa")
-			result_Matrices = Matriz_Densa.new(operando[0].size, operando[0][0].size)
-			result_Matrices.nulo
+			@result_Matrices = Matriz_Densa.new(operando[0].size, operando[0][0].size)
+			@result_Matrices.nulo
 		elsif (opciones.include?"dispersa")
-			result_Matrices = Matriz_Dispersa.new(operando[0].size, operando[0][0].size)
-			result_Matrices.nulo
+			@result_Matrices = Matriz_Dispersa.new(operando[0].size, operando[0][0].size)
+			@result_Matrices.nulo
 		end
 		
 		vector_Matrices = []
@@ -58,28 +76,26 @@ class MatrizDSL
 		case self.operacion
 		when "suma"
 			vector_Matrices.each do |matriz|
-				result_Matrices = result_Matrices + matriz
+				@result_Matrices = @result_Matrices + matriz
 			end
 		when "resta"
 			vector_Matrices.each do |matriz|
-				result_Matrices = result_Matrices - matriz
+				@result_Matrices = @result_Matrices - matriz
 			end
 		when "producto"
 			vector_Matrices.each do |matriz|
-				result_Matrices =  result_Matrices * matriz
+				@result_Matrices =  @result_Matrices * matriz
 			end
 		else
 			raise TypeError, "No existe la operacion: SUMA, RESTA y PRODUCTO"
 		end
 		
 		if (opciones.include?("console"))
-			result_Matrices
-			puts "IMPRIMIENDO RESULTADO"
-			puts "#{result_Matrices}"
+			@result_Matrices
 		elsif (opciones.include?("console"))
 			# Crea un nuevo fichero, y escribe
 			File.open('Resultado.txt', 'w') do |fich|
-				fich.puts "#{result_Matrices}"
+				fich.puts "#{@result_Matrices}"
 			end #File
 			nil
 		end #if

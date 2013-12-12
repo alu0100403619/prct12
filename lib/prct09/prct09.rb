@@ -105,5 +105,11 @@ require_relative 'Matriz.rb'
 		operand [[1,1,1],[1,1,1],[1,1,1]]
 	end
 	puts "Clase de ejemplo: #{ejemplo.class}"
+	puts "Datos de Ejemplo:"
+	ejemplo.mostrar_datos
+	
+	puts ""
+	
+	puts "Resultado:"
 	puts "#{ejemplo}"
 	
