@@ -16,7 +16,8 @@ end
 Utilizar Gemnasium para comprobar las dependencias de la aplicación desarrollada.
 Indicar la URL del repositorio que ha desarrollado y el informe de dependencias para su Gema ofrecido por Gemnasium.
 
-URL's: git@github.com:alu0100403619/prct11.github
-       https://github.com/alu0100403619/prct11.git
+URL's: git@github.com:alu0100536591/prct12.github
+       https://github.com/alu0100403619/prct12.git
 
-Gemnasium: 
+Gemnasium: https://gemnasium.com/alu0100536591/prct12
+	https://gemnasium.com/alu0100403619/prct12
